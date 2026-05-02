@@ -1,16 +1,26 @@
-# React + Vite
+# 💻 Mohit B | Developer Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to the repository for my personal developer portfolio! This is a highly-animated, single-page application built to showcase my backend engineering projects, skills, and experience.
 
-Currently, two official plugins are available:
+## 🚀 Live Demo
+You can view the live portfolio here: **[https://mohit-portfolio-339bb.web.app](https://mohit-portfolio-339bb.web.app)**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## ⚡ Tech Stack
+This portfolio is intentionally built without heavy frontend frameworks to demonstrate lightweight, performant design:
+*   **HTML5 & Vanilla JavaScript** (No React/Build steps)
+*   **Tailwind CSS** (via CDN for rapid utility styling)
+*   **tsParticles** (For the interactive, mouse-repelling background orbs)
+*   **Typed.js** (For the terminal typewriter effect)
+*   **Firebase Hosting** (For fast, secure deployment)
 
-## React Compiler
+## ✨ Key Features
+*   **Custom Cyberpunk Cursor**: A custom-built dot and ring cursor system that smoothly tracks the mouse and expands/glows when hovering over interactive elements.
+*   **Terminal Aesthetics**: macOS terminal-inspired UI cards and command-prompt (`$`) text elements.
+*   **Scroll Reveal Animations**: Utilizes `IntersectionObserver` to trigger fade-in and slide-up animations as sections enter the viewport.
+*   **Glassmorphism**: Frosted glass panels layered over a subtle grid background.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 👤 Author
+**Mohit B**
+*   Computer Science Student @ RNSIT Bengaluru
+*   Backend Engineer & AI Enthusiast
+*   GitHub: [@Mohit703-max](https://github.com/Mohit703-max)
