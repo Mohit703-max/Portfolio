@@ -3,7 +3,7 @@
 Welcome to the repository for my personal developer portfolio! This is a highly-animated, single-page application built to showcase my backend engineering projects, skills, and experience.
 
 ## 🚀 Live Demo
-You can view the live portfolio here: **[mohit2705s-portfolio.netlify.app)**
+You can view the live portfolio here: **[https://mohit2705-portfolio.netlify.app/)**
 
 ## ⚡ Tech Stack
 This portfolio is intentionally built without heavy frontend frameworks to demonstrate lightweight, performant design:
