@@ -6,7 +6,7 @@
     <title>Mohit B | Backend Engineer</title>
     
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -23,11 +23,14 @@
                     },
                     colors: {
                         brand: {
-                            dark: '#0a0a0a',
-                            darker: '#050505',
+                            dark: '#050505',
+                            darker: '#000000',
                             light: '#00f5d4', // Cyan/Teal
                             accent: '#fbbf24', // Amber/Gold
                         }
+                    },
+                    spacing: {
+                        'section': '6rem',
                     }
                 }
             }
@@ -40,100 +43,164 @@
     <script src="https://cdn.jsdelivr.net/npm/tsparticles-basic@2/tsparticles.basic.min.js"></script>
     
     <style>
-        /* Base styles & Custom Cursor */
-        body, html {
-            cursor: none; /* Hide default cursor */
-            background-color: #0a0a0a;
-            color: #e5e5e5;
-            overflow-x: hidden;
+        :root {
+            --bg-gradient-1: #08080c;
+            --bg-gradient-2: #121218;
         }
 
-        /* Custom Cursor Elements */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        body, html {
+            cursor: none; 
+            background: linear-gradient(120deg, var(--bg-gradient-1), var(--bg-gradient-2), var(--bg-gradient-1));
+            background-size: 200% 200%;
+            animation: gradientShift 20s ease infinite;
+            color: #e5e5e5;
+            overflow-x: hidden;
+            line-height: 1.7;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
         .cursor-dot {
-            width: 8px;
-            height: 8px;
+            width: 8px; height: 8px;
             background-color: white;
             border-radius: 50%;
             position: fixed;
-            top: 0;
-            left: 0;
+            top: 0; left: 0;
             transform: translate(-50%, -50%);
-            pointer-events: none;
-            z-index: 9999;
+            pointer-events: none; z-index: 9999;
             transition: width 0.2s, height 0.2s, background-color 0.2s;
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
         }
-
         .cursor-ring {
-            width: 28px;
-            height: 28px;
+            width: 28px; height: 28px;
             border: 1px solid rgba(255, 255, 255, 0.4);
             border-radius: 50%;
             position: fixed;
-            top: 0;
-            left: 0;
+            top: 0; left: 0;
             transform: translate(-50%, -50%);
-            pointer-events: none;
-            z-index: 9998;
+            pointer-events: none; z-index: 9998;
             transition: width 0.2s, height 0.2s, border-color 0.2s;
             transition-timing-function: ease-out;
         }
-
-        /* Hover States for Custom Cursor */
         .hover-active .cursor-dot {
-            width: 12px;
-            height: 12px;
+            width: 12px; height: 12px;
             background-color: #fbbf24;
             box-shadow: 0 0 15px rgba(251, 191, 36, 0.8);
         }
-
         .hover-active .cursor-ring {
-            width: 36px;
-            height: 36px;
+            width: 48px; height: 48px;
             border-color: rgba(251, 191, 36, 0.6);
         }
 
-        /* Scroll Animations */
+        .bg-grid {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
         .reveal {
             opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
         }
         .reveal.active {
             opacity: 1;
             transform: translateY(0);
         }
 
-        /* Grid Background */
-        .bg-grid {
-            background-image: 
-                linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
-            background-size: 30px 30px;
-        }
+        .stagger-1 { transition-delay: 100ms; }
+        .stagger-2 { transition-delay: 200ms; }
+        .stagger-3 { transition-delay: 300ms; }
+        .stagger-4 { transition-delay: 400ms; }
+        .stagger-5 { transition-delay: 500ms; }
 
-        /* Glassmorphism & Cards */
         .glass-card {
-            background: rgba(15, 15, 20, 0.6);
-            backdrop-filter: blur(10px);
+            background: rgba(15, 15, 20, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         
+        .project-card {
+            will-change: transform, box-shadow;
+        }
         .project-card:hover {
-            transform: scale(1.02);
-            border-color: rgba(0, 245, 212, 0.5);
-            box-shadow: 0 0 20px rgba(0, 245, 212, 0.15);
+            transform: scale(1.03) translateY(-8px);
+            border-color: rgba(251, 191, 36, 0.8);
+            box-shadow: 0 15px 35px rgba(251, 191, 36, 0.15), inset 0 0 20px rgba(251, 191, 36, 0.05);
+            z-index: 10;
         }
 
-        /* Terminal styling */
+        .tech-pill {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .tech-pill:hover {
+            transform: scale(1.1);
+            background-color: #00f5d4;
+            color: #000;
+            border-color: #00f5d4;
+            box-shadow: 0 0 15px rgba(0, 245, 212, 0.4);
+        }
+
+        .section-heading {
+            border-left: 4px solid #00f5d4;
+            padding-left: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+        .section-heading::after {
+            content: '_';
+            position: absolute;
+            right: -24px;
+            animation: blink 1s step-end infinite;
+            color: #00f5d4;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .progress-bar {
+            width: 0;
+            transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .gallery-img {
+            transition: transform 0.5s ease, filter 0.5s ease;
+            filter: grayscale(30%) brightness(0.85);
+        }
+        .gallery-img:hover {
+            transform: scale(1.05);
+            filter: grayscale(0%) brightness(1.1);
+        }
+
         .terminal-header {
             background: #1e1e2d;
             border-bottom: 1px solid rgba(255,255,255,0.1);
         }
         .mac-btn {
-            width: 12px;
-            height: 12px;
+            width: 12px; height: 12px;
             border-radius: 50%;
             display: inline-block;
         }
@@ -141,193 +208,231 @@
         .mac-min { background-color: #ffbd2e; }
         .mac-max { background-color: #27c93f; }
 
-        /* Gradients */
         .text-gradient {
             background: linear-gradient(135deg, #00f5d4, #fbbf24);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        /* Pulse Ring Animation */
-        .pulse-ring {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border: 2px solid #00f5d4;
-            border-radius: 50%;
-            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 0.8; }
-            100% { transform: scale(1.5); opacity: 0; }
-        }
-
-        /* Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #050505; }
         ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #00f5d4; }
     </style>
 </head>
-<body class="bg-grid relative">
+<body class="relative">
 
-    <!-- Custom Cursor Elements -->
+    <div id="scroll-progress" class="fixed top-0 left-0 h-1 bg-brand-light z-[100] transition-all duration-75" style="width: 0%; box-shadow: 0 0 10px #00f5d4;"></div>
+
+    <div class="bg-grid"></div>
+
     <div class="cursor-dot" id="cursor-dot"></div>
     <div class="cursor-ring" id="cursor-ring"></div>
+    <canvas id="cursor-canvas" class="fixed inset-0 pointer-events-none z-[9998]"></canvas>
 
-    <!-- tsParticles Container -->
     <div id="tsparticles" class="fixed inset-0 pointer-events-none z-[-1]"></div>
 
     <!-- Navigation -->
-    <header id="navbar" class="fixed top-0 w-full z-50 transition-all duration-300 py-6 border-b border-transparent">
-        <div class="max-w-6xl mx-auto px-6 flex justify-between items-center">
+    <header id="navbar" class="fixed top-0 w-full z-50 transition-all duration-500 py-6 border-b border-transparent">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
             <div class="font-mono font-bold text-white text-xl tracking-tighter hover-trigger">
                 MB<span class="text-brand-light animate-pulse">_</span>
             </div>
             
-            <nav class="hidden md:flex gap-8 text-sm font-mono text-gray-400">
-                <a href="#about" class="hover:text-brand-light transition-colors hover-trigger">01. about</a>
-                <a href="#projects" class="hover:text-brand-light transition-colors hover-trigger">02. work</a>
-                <a href="#skills" class="hover:text-brand-light transition-colors hover-trigger">03. skills</a>
-                <a href="#contact" class="hover:text-brand-light transition-colors hover-trigger">04. contact</a>
+            <button id="mobile-menu-toggle" class="md:hidden text-white hover:text-brand-light transition-colors z-50 relative w-8 h-8 flex flex-col justify-center gap-1.5 group">
+                <span class="w-full h-0.5 bg-current transition-all duration-300 group-[.open]:rotate-45 group-[.open]:translate-y-2"></span>
+                <span class="w-full h-0.5 bg-current transition-all duration-300 group-[.open]:opacity-0"></span>
+                <span class="w-full h-0.5 bg-current transition-all duration-300 group-[.open]:-rotate-45 group-[.open]:-translate-y-2"></span>
+            </button>
+
+            <nav id="nav-links" class="fixed inset-0 bg-[#050505]/95 backdrop-blur-xl flex flex-col items-center justify-center gap-8 text-lg font-mono text-gray-400 opacity-0 pointer-events-none transition-all duration-300 md:static md:flex-row md:bg-transparent md:backdrop-blur-none md:opacity-100 md:pointer-events-auto md:text-sm md:gap-10 md:p-0">
+                <a href="#about" class="nav-item hover:text-brand-light transition-colors hover-trigger translate-y-4 md:translate-y-0 opacity-0 md:opacity-100 duration-300">01. about</a>
+                <a href="#projects" class="nav-item hover:text-brand-light transition-colors hover-trigger translate-y-4 md:translate-y-0 opacity-0 md:opacity-100 duration-300 delay-75">02. work</a>
+                <a href="#skills" class="nav-item hover:text-brand-light transition-colors hover-trigger translate-y-4 md:translate-y-0 opacity-0 md:opacity-100 duration-300 delay-150">03. skills</a>
+                <a href="#community" class="nav-item hover:text-brand-light transition-colors hover-trigger translate-y-4 md:translate-y-0 opacity-0 md:opacity-100 duration-300 delay-200">04. community</a>
+                <a href="#contact" class="nav-item hover:text-brand-light transition-colors hover-trigger translate-y-4 md:translate-y-0 opacity-0 md:opacity-100 duration-300 delay-300">05. contact</a>
             </nav>
         </div>
     </header>
 
-    <main class="max-w-5xl mx-auto px-6 pt-32 pb-32 flex flex-col gap-32">
+    <main class="max-w-6xl mx-auto px-6 pt-32 pb-32 flex flex-col gap-[8rem]">
         
         <!-- HERO SECTION -->
-        <section id="hero" class="min-h-[80vh] flex flex-col justify-center reveal active relative">
-            <div class="inline-flex items-center gap-3 px-4 py-2 border border-brand-light/30 bg-brand-light/5 text-brand-light text-xs font-mono uppercase tracking-widest w-max mb-8">
-                <span class="w-2 h-2 bg-brand-light rounded-full animate-pulse"></span>
-                SYSTEM ONLINE · BENGALURU · 2026
-            </div>
-            
-            <h1 class="text-6xl sm:text-8xl font-black text-white uppercase tracking-tighter mb-6">
-                <span class="text-gradient">Mohit B</span>
-            </h1>
-            
-            <div class="text-xl sm:text-2xl font-mono text-gray-400 mb-12 h-8">
-                $ <span id="typed-text"></span>
-            </div>
+        <section id="hero" class="min-h-[85vh] flex flex-col justify-center reveal active relative">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center w-full">
+                <!-- Left Content -->
+                <div class="lg:col-span-7 flex flex-col justify-center">
+                    <div class="inline-flex items-center gap-3 px-4 py-2 border border-brand-light/30 bg-brand-light/5 text-brand-light text-xs font-mono uppercase tracking-widest w-max mb-8 rounded-full">
+                        <span class="w-2 h-2 bg-brand-light rounded-full animate-pulse shadow-[0_0_8px_#00f5d4]"></span>
+                        SYSTEM ONLINE · BENGALURU · 2026
+                    </div>
+                    
+                    <div class="flex flex-col md:flex-row md:items-center gap-6 mb-6">
+                        <h1 class="text-6xl sm:text-8xl font-black text-white uppercase tracking-tighter relative z-10">
+                            <span class="text-gradient">Mohit B</span>
+                        </h1>
+                        
+                        <!-- Interactive Robot -->
+                        <div class="relative hidden md:flex items-center group cursor-crosshair">
+                            <div class="w-16 h-16 bg-[#12121a] rounded-2xl border border-brand-light/30 shadow-[0_0_15px_rgba(0,245,212,0.2)] flex flex-col items-center justify-center relative overflow-hidden transition-transform group-hover:scale-110 duration-300">
+                                <div class="absolute w-full h-1.5 bg-brand-light/10 top-3"></div>
+                                <div class="flex gap-2.5 relative z-10 -mt-1">
+                                    <!-- Left Eye -->
+                                    <div class="w-4 h-4 bg-[#050505] rounded-full relative flex items-center justify-center border border-white/5 overflow-hidden">
+                                        <div class="pupil w-1.5 h-1.5 bg-brand-light rounded-full absolute shadow-[0_0_8px_#00f5d4]"></div>
+                                    </div>
+                                    <!-- Right Eye -->
+                                    <div class="w-4 h-4 bg-[#050505] rounded-full relative flex items-center justify-center border border-white/5 overflow-hidden">
+                                        <div class="pupil w-1.5 h-1.5 bg-brand-light rounded-full absolute shadow-[0_0_8px_#00f5d4]"></div>
+                                    </div>
+                                </div>
+                                <div class="absolute bottom-3 w-5 h-1 rounded-full bg-brand-accent/80 transition-all duration-300 group-hover:w-6 group-hover:bg-brand-light group-hover:h-1.5"></div>
+                            </div>
 
-            <div class="flex items-center gap-6">
-                <div class="relative w-16 h-16 flex items-center justify-center bg-brand-dark border border-white/10 rounded-full hover-trigger">
-                    <div class="pulse-ring"></div>
-                    <i class="fa-solid fa-code text-brand-light text-xl relative z-10"></i>
+                            <!-- Speech Bubble -->
+                            <div class="absolute left-full ml-4 -top-8 w-64 p-3 bg-[#0a0a0f]/90 backdrop-blur-md border border-brand-light/40 rounded-2xl rounded-bl-none text-xs font-mono shadow-[0_0_20px_rgba(0,245,212,0.15)] animate-[bounce_3s_ease-in-out_infinite] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-50">
+                                <span class="text-brand-light font-bold">Hey!</span> <span class="text-gray-300">I'm Mohit B. Welcome to my portfolio!</span> <i class="fa-solid fa-sparkles text-brand-accent ml-1"></i>
+                                <div class="absolute -bottom-2 left-0 w-4 h-4 bg-[#0a0a0f]/90 border-b border-l border-brand-light/40 transform -rotate-45 translate-x-2"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-xl sm:text-2xl font-mono text-gray-400 mb-12 h-8 flex items-center">
+                        <span class="text-brand-accent mr-3">~</span> $ <span id="typed-text" class="ml-2 text-white"></span>
+                    </div>
+
+                    <div class="flex items-center gap-6 mt-4">
+                        <a href="#projects" class="px-8 py-4 bg-white text-black font-bold uppercase tracking-wider text-sm hover:bg-brand-accent transition-colors hover-trigger rounded-sm shadow-lg hover:shadow-[0_0_20px_rgba(251,191,36,0.4)]">
+                            Execute Builds
+                        </a>
+                        <a href="https://github.com/Mohit703-max" target="_blank" class="px-8 py-4 border border-white/20 text-white font-bold uppercase tracking-wider text-sm hover:border-brand-light hover:text-brand-light transition-colors flex items-center gap-3 hover-trigger rounded-sm bg-white/5 backdrop-blur-sm">
+                            <i class="fa-brands fa-github text-lg"></i> GitHub
+                        </a>
+                    </div>
                 </div>
-                <div class="flex gap-4">
-                    <a href="#projects" class="px-6 py-3 bg-white text-black font-bold uppercase tracking-wider text-sm hover:bg-brand-accent transition-colors hover-trigger">
-                        Execute Builds
-                    </a>
-                    <a href="https://github.com/Mohit703-max" target="_blank" class="px-6 py-3 border border-white/20 text-white font-bold uppercase tracking-wider text-sm hover:border-brand-light hover:text-brand-light transition-colors flex items-center gap-2 hover-trigger">
-                        <i class="fa-brands fa-github"></i> GitHub
-                    </a>
+
+                <!-- Right Content (Terminal) -->
+                <div class="lg:col-span-5 hidden lg:flex flex-col justify-center">
+                    <div class="glass-card rounded-xl border border-white/10 overflow-hidden shadow-[0_0_30px_rgba(0,245,212,0.1)] relative">
+                        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-4 opacity-5 pointer-events-none">
+                            <i class="fa-solid fa-microchip text-[12rem] text-brand-light"></i>
+                        </div>
+                        <div class="terminal-header px-4 py-3 flex items-center gap-2 bg-[#12121a] border-b border-white/5">
+                            <span class="mac-btn mac-close"></span>
+                            <span class="mac-btn mac-min"></span>
+                            <span class="mac-btn mac-max"></span>
+                            <span class="ml-4 font-mono text-xs text-gray-500">system_monitor.sh</span>
+                        </div>
+                        <div class="p-6 font-mono text-xs leading-loose text-gray-400 h-[320px] overflow-y-auto relative z-10" id="system-logs">
+                            <!-- Logs injected via JS -->
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- ABOUT SECTION (Terminal Style) -->
+        <!-- ABOUT SECTION -->
         <section id="about" class="reveal">
-            <h2 class="text-3xl font-bold text-white font-mono mb-8"><span class="text-brand-light">$</span> cat about.md</h2>
+            <h2 class="text-3xl font-bold text-white font-mono mb-10"><span class="text-brand-light mr-2">01.</span> <span class="section-heading">cat about.md</span></h2>
             
-            <div class="glass-card rounded-lg overflow-hidden border border-white/10">
+            <div class="glass-card rounded-xl overflow-hidden border border-white/10 shadow-2xl">
                 <div class="terminal-header px-4 py-3 flex items-center gap-2">
                     <span class="mac-btn mac-close"></span>
                     <span class="mac-btn mac-min"></span>
                     <span class="mac-btn mac-max"></span>
                     <span class="ml-4 font-mono text-xs text-gray-500">mohit@system: ~/portfolio</span>
                 </div>
-                <div class="p-6 sm:p-8 font-mono text-sm sm:text-base leading-relaxed text-gray-300">
-                    <p class="mb-4">
+                <div class="p-8 sm:p-10 font-mono text-base leading-relaxed text-gray-300">
+                    <p class="mb-6">
                         <span class="text-brand-accent">/**</span><br>
-                        &nbsp;* I am a highly motivated Computer Science student (CGPA: 9.3)<br>
+                        &nbsp;* I am a highly motivated Computer Science student (CGPA: <span class="text-brand-light font-bold">9.3</span>)<br>
                         &nbsp;* dedicated to crafting efficient backend architectures and exploring<br>
                         &nbsp;* the frontiers of Artificial Intelligence.<br>
                         &nbsp;*/
                     </p>
-                    <p class="mb-4 text-gray-400">
+                    <p class="mb-6 text-gray-400">
                         My career objective is to leverage foundational knowledge in algorithms and system design to build scalable solutions. Whether optimizing a database query, integrating machine learning models, or leading teams to hackathon wins, I approach challenges with analytical rigor.
                     </p>
-                    <p>
+                    <div class="bg-black/30 p-4 rounded border border-white/5 mt-8">
                         <span class="text-brand-light">sys.edu:</span> RNSIT (B.E. CSE, 2023-2027)<br>
-                        <span class="text-brand-light">sys.metrics:</span> 12th (93%) | 10th (95%)
-                    </p>
+                        <span class="text-brand-light">sys.metrics:</span> 12th (93%) | 10th (95%)<br>
+                        <span class="text-brand-light">sys.status:</span> <span class="text-green-400">Available for backend / AI roles</span><span class="animate-pulse">_</span>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- PROJECTS SECTION -->
         <section id="projects" class="reveal">
-            <h2 class="text-3xl font-bold text-white font-mono mb-8"><span class="text-brand-light">$</span> ls -la ./projects</h2>
+            <h2 class="text-3xl font-bold text-white font-mono mb-10"><span class="text-brand-light mr-2">02.</span> <span class="section-heading">ls -la ./work</span></h2>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <!-- Project 1 -->
-                <div class="glass-card project-card p-8 rounded-xl hover-trigger relative overflow-hidden group">
-                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 transition-opacity">
-                        <i class="fa-solid fa-server text-6xl text-brand-light"></i>
+                <div class="glass-card project-card p-8 rounded-2xl hover-trigger relative overflow-hidden group flex flex-col h-full">
+                    <div class="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-20 transition-opacity duration-500 transform group-hover:scale-110 group-hover:-rotate-12">
+                        <i class="fa-solid fa-server text-8xl text-brand-light"></i>
                     </div>
-                    <div class="font-mono text-xs text-brand-light mb-2">Backend Intern Role</div>
-                    <h3 class="text-2xl font-bold text-white mb-3 tracking-tight">Zefender</h3>
-                    <p class="text-gray-400 text-sm mb-6 relative z-10 leading-relaxed">
+                    <div class="font-mono text-xs text-brand-light mb-3 font-bold tracking-widest uppercase">Backend Intern Role</div>
+                    <h3 class="text-3xl font-bold text-white mb-4 tracking-tight">Zefender</h3>
+                    <p class="text-gray-400 text-sm mb-6 relative z-10 flex-grow">
                         Engineered the core backend at Zefender. Developed 9 high-performance REST APIs, implemented secure JWT authentication, integrated Cloudflare R2 for scalable object storage, and connected with a React frontend.
                     </p>
-                    <div class="flex flex-wrap gap-2 font-mono text-xs">
-                        <span class="px-2 py-1 bg-white/5 border border-white/10 text-gray-300">Node.js</span>
-                        <span class="px-2 py-1 bg-white/5 border border-white/10 text-gray-300">PostgreSQL</span>
-                        <span class="px-2 py-1 bg-white/5 border border-white/10 text-gray-300">JWT</span>
-                        <span class="px-2 py-1 bg-white/5 border border-white/10 text-gray-300">Cloudflare R2</span>
+                    <div class="flex flex-wrap gap-3 font-mono text-xs mt-auto pt-4 border-t border-white/10">
+                        <span class="tech-pill px-3 py-1 bg-black/40 border border-white/20 text-gray-300 rounded-full cursor-none">Node.js</span>
+                        <span class="tech-pill px-3 py-1 bg-black/40 border border-white/20 text-gray-300 rounded-full cursor-none">PostgreSQL</span>
+                        <span class="tech-pill px-3 py-1 bg-black/40 border border-white/20 text-gray-300 rounded-full cursor-none">JWT</span>
+                        <span class="tech-pill px-3 py-1 bg-black/40 border border-white/20 text-gray-300 rounded-full cursor-none">Cloudflare R2</span>
                     </div>
                 </div>
 
                 <!-- Project 2 -->
-                <div class="glass-card project-card p-8 rounded-xl hover-trigger relative overflow-hidden group">
-                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 transition-opacity">
-                        <i class="fa-solid fa-robot text-6xl text-brand-accent"></i>
+                <div class="glass-card project-card p-8 rounded-2xl hover-trigger relative overflow-hidden group flex flex-col h-full">
+                    <div class="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-20 transition-opacity duration-500 transform group-hover:scale-110 group-hover:rotate-12">
+                        <i class="fa-solid fa-robot text-8xl text-brand-accent"></i>
                     </div>
-                    <div class="font-mono text-xs text-brand-accent mb-2">Hardware / HCI</div>
-                    <h3 class="text-2xl font-bold text-white mb-3 tracking-tight">HASTRA</h3>
-                    <p class="text-gray-400 text-sm mb-6 relative z-10 leading-relaxed">
+                    <div class="font-mono text-xs text-brand-accent mb-3 font-bold tracking-widest uppercase">Hardware / HCI</div>
+                    <h3 class="text-3xl font-bold text-white mb-4 tracking-tight">HASTRA</h3>
+                    <p class="text-gray-400 text-sm mb-6 relative z-10 flex-grow">
                         A pneumatic prosthetic arm designed with Human-Computer Interaction (HCI) principles. Translates muscle movements into precise mechanical actions for a low-cost, smart prosthesis.
                     </p>
-                    <div class="flex flex-wrap gap-2 font-mono text-xs">
-                        <span class="px-2 py-1 bg-white/5 border border-white/10 text-gray-300">Embedded Systems</span>
-                        <span class="px-2 py-1 bg-white/5 border border-white/10 text-gray-300">C/C++</span>
-                        <span class="px-2 py-1 bg-white/5 border border-white/10 text-gray-300">HCI</span>
+                    <div class="flex flex-wrap gap-3 font-mono text-xs mt-auto pt-4 border-t border-white/10">
+                        <span class="tech-pill px-3 py-1 bg-black/40 border border-white/20 text-gray-300 rounded-full cursor-none">Embedded Systems</span>
+                        <span class="tech-pill px-3 py-1 bg-black/40 border border-white/20 text-gray-300 rounded-full cursor-none">C/C++</span>
+                        <span class="tech-pill px-3 py-1 bg-black/40 border border-white/20 text-gray-300 rounded-full cursor-none">HCI</span>
                     </div>
                 </div>
 
                 <!-- Project 3 -->
-                <div class="glass-card project-card p-8 rounded-xl hover-trigger relative overflow-hidden group">
-                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 transition-opacity">
-                        <i class="fa-brands fa-ethereum text-6xl text-purple-500"></i>
+                <div class="glass-card project-card p-8 rounded-2xl hover-trigger relative overflow-hidden group flex flex-col h-full">
+                    <div class="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-20 transition-opacity duration-500 transform group-hover:scale-110 group-hover:-rotate-12">
+                        <i class="fa-brands fa-ethereum text-8xl text-purple-500"></i>
                     </div>
-                    <div class="font-mono text-xs text-purple-400 mb-2">AI + Web3</div>
-                    <h3 class="text-2xl font-bold text-white mb-3 tracking-tight">Sentiment Oracle</h3>
-                    <p class="text-gray-400 text-sm mb-6 relative z-10 leading-relaxed">
+                    <div class="font-mono text-xs text-purple-400 mb-3 font-bold tracking-widest uppercase">AI + Web3</div>
+                    <h3 class="text-3xl font-bold text-white mb-4 tracking-tight">Sentiment Oracle</h3>
+                    <p class="text-gray-400 text-sm mb-6 relative z-10 flex-grow">
                         Analyzes market sentiment using Natural Language Processing (NLP) and securely logs immutable sentiment trends onto a blockchain network.
                     </p>
-                    <div class="flex flex-wrap gap-2 font-mono text-xs">
-                        <span class="px-2 py-1 bg-white/5 border border-white/10 text-gray-300">Python</span>
-                        <span class="px-2 py-1 bg-white/5 border border-white/10 text-gray-300">NLP</span>
-                        <span class="px-2 py-1 bg-white/5 border border-white/10 text-gray-300">Blockchain</span>
+                    <div class="flex flex-wrap gap-3 font-mono text-xs mt-auto pt-4 border-t border-white/10">
+                        <span class="tech-pill px-3 py-1 bg-black/40 border border-white/20 text-gray-300 rounded-full cursor-none">Python</span>
+                        <span class="tech-pill px-3 py-1 bg-black/40 border border-white/20 text-gray-300 rounded-full cursor-none">NLP</span>
+                        <span class="tech-pill px-3 py-1 bg-black/40 border border-white/20 text-gray-300 rounded-full cursor-none">Blockchain</span>
                     </div>
                 </div>
 
                 <!-- Project 4 -->
-                <div class="glass-card project-card p-8 rounded-xl hover-trigger relative overflow-hidden group">
-                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 transition-opacity">
-                        <i class="fa-solid fa-file-contract text-6xl text-blue-500"></i>
+                <div class="glass-card project-card p-8 rounded-2xl hover-trigger relative overflow-hidden group flex flex-col h-full">
+                    <div class="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-20 transition-opacity duration-500 transform group-hover:scale-110 group-hover:rotate-12">
+                        <i class="fa-solid fa-scale-balanced text-8xl text-blue-500"></i>
                     </div>
-                    <div class="font-mono text-xs text-blue-400 mb-2">Machine Learning</div>
-                    <h3 class="text-2xl font-bold text-white mb-3 tracking-tight">AI Legal Simplifier</h3>
-                    <p class="text-gray-400 text-sm mb-6 relative z-10 leading-relaxed">
+                    <div class="font-mono text-xs text-blue-400 mb-3 font-bold tracking-widest uppercase">Machine Learning</div>
+                    <h3 class="text-3xl font-bold text-white mb-4 tracking-tight">AI Legal Simplifier</h3>
+                    <p class="text-gray-400 text-sm mb-6 relative z-10 flex-grow">
                         A robust tool powered by Hugging Face transformers that reads complex legal jargon and outputs plain, easy-to-understand summaries for everyday users.
                     </p>
-                    <div class="flex flex-wrap gap-2 font-mono text-xs">
-                        <span class="px-2 py-1 bg-white/5 border border-white/10 text-gray-300">Hugging Face</span>
-                        <span class="px-2 py-1 bg-white/5 border border-white/10 text-gray-300">Python</span>
-                        <span class="px-2 py-1 bg-white/5 border border-white/10 text-gray-300">React</span>
+                    <div class="flex flex-wrap gap-3 font-mono text-xs mt-auto pt-4 border-t border-white/10">
+                        <span class="tech-pill px-3 py-1 bg-black/40 border border-white/20 text-gray-300 rounded-full cursor-none">Hugging Face</span>
+                        <span class="tech-pill px-3 py-1 bg-black/40 border border-white/20 text-gray-300 rounded-full cursor-none">Python</span>
+                        <span class="tech-pill px-3 py-1 bg-black/40 border border-white/20 text-gray-300 rounded-full cursor-none">React</span>
                     </div>
                 </div>
             </div>
@@ -335,66 +440,198 @@
 
         <!-- SKILLS SECTION -->
         <section id="skills" class="reveal">
-            <h2 class="text-3xl font-bold text-white font-mono mb-8"><span class="text-brand-light">$</span> env | grep skills</h2>
+            <h2 class="text-3xl font-bold text-white font-mono mb-10"><span class="text-brand-light mr-2">03.</span> <span class="section-heading">env | grep skills</span></h2>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                <div>
-                    <h3 class="text-xl font-bold text-white mb-6 tracking-wide">HARDWARE_&_SOFTWARE</h3>
-                    <div class="flex flex-wrap gap-3 font-mono text-sm">
-                        <!-- Skill chips -->
-                        <span class="px-4 py-2 border border-white/10 bg-white/5 text-gray-300 hover:bg-brand-light hover:text-black transition-all hover:-translate-y-1 hover-trigger cursor-none">Node.js</span>
-                        <span class="px-4 py-2 border border-white/10 bg-white/5 text-gray-300 hover:bg-brand-light hover:text-black transition-all hover:-translate-y-1 hover-trigger cursor-none">Python</span>
-                        <span class="px-4 py-2 border border-white/10 bg-white/5 text-gray-300 hover:bg-brand-light hover:text-black transition-all hover:-translate-y-1 hover-trigger cursor-none">PostgreSQL</span>
-                        <span class="px-4 py-2 border border-white/10 bg-white/5 text-gray-300 hover:bg-brand-light hover:text-black transition-all hover:-translate-y-1 hover-trigger cursor-none">MongoDB</span>
-                        <span class="px-4 py-2 border border-white/10 bg-white/5 text-gray-300 hover:bg-brand-light hover:text-black transition-all hover:-translate-y-1 hover-trigger cursor-none">React</span>
-                        <span class="px-4 py-2 border border-white/10 bg-white/5 text-gray-300 hover:bg-brand-light hover:text-black transition-all hover:-translate-y-1 hover-trigger cursor-none">Docker</span>
-                        <span class="px-4 py-2 border border-white/10 bg-white/5 text-gray-300 hover:bg-brand-light hover:text-black transition-all hover:-translate-y-1 hover-trigger cursor-none">REST APIs</span>
-                        <span class="px-4 py-2 border border-white/10 bg-white/5 text-gray-300 hover:bg-brand-light hover:text-black transition-all hover:-translate-y-1 hover-trigger cursor-none">Hugging Face</span>
-                        <span class="px-4 py-2 border border-white/10 bg-white/5 text-gray-300 hover:bg-brand-light hover:text-black transition-all hover:-translate-y-1 hover-trigger cursor-none">Blockchain</span>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Backend Skills -->
+                <div class="glass-card p-8 rounded-2xl stagger-1 reveal hover-trigger">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-12 h-12 rounded-full bg-brand-light/10 flex items-center justify-center border border-brand-light/20">
+                            <i class="fa-solid fa-server text-brand-light text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white tracking-wide">Backend</h3>
+                    </div>
+                    <div class="space-y-5">
+                        <div>
+                            <div class="flex justify-between text-xs font-mono text-gray-400 mb-2"><span>Node.js</span><span>90%</span></div>
+                            <div class="h-1.5 w-full bg-black/50 rounded-full overflow-hidden">
+                                <div class="progress-bar h-full bg-brand-light" data-width="90%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs font-mono text-gray-400 mb-2"><span>PostgreSQL</span><span>85%</span></div>
+                            <div class="h-1.5 w-full bg-black/50 rounded-full overflow-hidden">
+                                <div class="progress-bar h-full bg-brand-light" data-width="85%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs font-mono text-gray-400 mb-2"><span>REST APIs / JWT</span><span>95%</span></div>
+                            <div class="h-1.5 w-full bg-black/50 rounded-full overflow-hidden">
+                                <div class="progress-bar h-full bg-brand-light" data-width="95%"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div>
-                    <h3 class="text-xl font-bold text-white mb-6 tracking-wide">CERTIFICATIONS</h3>
-                    <div class="flex flex-wrap gap-2 font-mono text-xs">
-                        <span class="px-2 py-1 bg-brand-dark border border-brand-light/30 text-brand-light">OS</span>
-                        <span class="px-2 py-1 bg-brand-dark border border-brand-light/30 text-brand-light">DBMS</span>
-                        <span class="px-2 py-1 bg-brand-dark border border-brand-light/30 text-brand-light">Java</span>
-                        <span class="px-2 py-1 bg-brand-dark border border-brand-light/30 text-brand-light">Networks</span>
-                        <span class="px-2 py-1 bg-brand-dark border border-brand-light/30 text-brand-light">DAA</span>
-                        <span class="px-2 py-1 bg-brand-dark border border-brand-light/30 text-brand-light">Digital Electronics</span>
-                        <span class="px-2 py-1 bg-brand-dark border border-brand-light/30 text-brand-light">Data Visualization</span>
-                        <span class="px-2 py-1 bg-brand-dark border border-brand-light/30 text-brand-light">C Programming</span>
+                <!-- AI & Data Skills -->
+                <div class="glass-card p-8 rounded-2xl stagger-2 reveal hover-trigger">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-12 h-12 rounded-full bg-brand-accent/10 flex items-center justify-center border border-brand-accent/20">
+                            <i class="fa-solid fa-brain text-brand-accent text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white tracking-wide">AI & Data</h3>
+                    </div>
+                    <div class="space-y-5">
+                        <div>
+                            <div class="flex justify-between text-xs font-mono text-gray-400 mb-2"><span>Python</span><span>88%</span></div>
+                            <div class="h-1.5 w-full bg-black/50 rounded-full overflow-hidden">
+                                <div class="progress-bar h-full bg-brand-accent" data-width="88%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs font-mono text-gray-400 mb-2"><span>Hugging Face</span><span>80%</span></div>
+                            <div class="h-1.5 w-full bg-black/50 rounded-full overflow-hidden">
+                                <div class="progress-bar h-full bg-brand-accent" data-width="80%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs font-mono text-gray-400 mb-2"><span>MongoDB</span><span>85%</span></div>
+                            <div class="h-1.5 w-full bg-black/50 rounded-full overflow-hidden">
+                                <div class="progress-bar h-full bg-brand-accent" data-width="85%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tools & Core -->
+                <div class="glass-card p-8 rounded-2xl stagger-3 reveal hover-trigger">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-12 h-12 rounded-full bg-purple-500/10 flex items-center justify-center border border-purple-500/20">
+                            <i class="fa-solid fa-layer-group text-purple-400 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white tracking-wide">Core & Tools</h3>
+                    </div>
+                    <div class="space-y-5">
+                        <div>
+                            <div class="flex justify-between text-xs font-mono text-gray-400 mb-2"><span>Docker</span><span>75%</span></div>
+                            <div class="h-1.5 w-full bg-black/50 rounded-full overflow-hidden">
+                                <div class="progress-bar h-full bg-purple-400" data-width="75%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs font-mono text-gray-400 mb-2"><span>React</span><span>80%</span></div>
+                            <div class="h-1.5 w-full bg-black/50 rounded-full overflow-hidden">
+                                <div class="progress-bar h-full bg-purple-400" data-width="80%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs font-mono text-gray-400 mb-2"><span>Blockchain</span><span>70%</span></div>
+                            <div class="h-1.5 w-full bg-black/50 rounded-full overflow-hidden">
+                                <div class="progress-bar h-full bg-purple-400" data-width="70%"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <!-- Certifications & Languages -->
+            <div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6 reveal stagger-4">
+                <div class="glass-card p-6 rounded-xl border-l-4 border-l-brand-light flex items-center gap-6 hover-trigger">
+                    <i class="fa-solid fa-certificate text-3xl text-gray-500"></i>
+                    <div>
+                        <h4 class="text-sm font-mono text-white mb-2 font-bold">Certifications & Coursework</h4>
+                        <div class="flex flex-wrap gap-2 font-mono text-[10px]">
+                            <span class="px-2 py-1 bg-black/40 border border-brand-light/30 text-gray-300 rounded-full">OS</span>
+                            <span class="px-2 py-1 bg-black/40 border border-brand-light/30 text-gray-300 rounded-full">DBMS</span>
+                            <span class="px-2 py-1 bg-black/40 border border-brand-light/30 text-gray-300 rounded-full">Java</span>
+                            <span class="px-2 py-1 bg-black/40 border border-brand-light/30 text-gray-300 rounded-full">Networks</span>
+                            <span class="px-2 py-1 bg-black/40 border border-brand-light/30 text-gray-300 rounded-full">DAA</span>
+                            <span class="px-2 py-1 bg-black/40 border border-brand-light/30 text-gray-300 rounded-full">Digital Electronics</span>
+                            <span class="px-2 py-1 bg-black/40 border border-brand-light/30 text-gray-300 rounded-full">C Programming</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="glass-card p-6 rounded-xl border-l-4 border-l-brand-accent flex items-center gap-6 hover-trigger">
+                    <i class="fa-solid fa-language text-3xl text-gray-500"></i>
+                    <div>
+                        <h4 class="text-sm font-mono text-white mb-2 font-bold">Languages</h4>
+                        <div class="flex flex-wrap gap-2 font-mono text-[10px]">
+                            <span class="px-3 py-1 bg-black/40 border border-brand-accent/30 text-brand-accent rounded-full">Kannada</span>
+                            <span class="px-3 py-1 bg-black/40 border border-brand-accent/30 text-brand-accent rounded-full">English</span>
+                            <span class="px-3 py-1 bg-black/40 border border-brand-accent/30 text-gray-300 rounded-full">Hindi</span>
+                            <span class="px-3 py-1 bg-black/40 border border-brand-accent/30 text-gray-300 rounded-full">Telugu</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- COMMUNITY & EXTRACURRICULARS SECTION -->
+        <section id="community" class="reveal">
+            <h2 class="text-3xl font-bold text-white font-mono mb-10"><span class="text-brand-light mr-2">04.</span> <span class="section-heading">./community --logs</span></h2>
             
-            <!-- Achievements -->
-            <div class="mt-12 glass-card p-6 border-l-4 border-l-brand-accent">
-                <h3 class="font-mono text-brand-accent text-sm mb-4">sys.achievements</h3>
-                <ul class="text-sm text-gray-400 space-y-2 font-mono">
-                    <li><i class="fa-solid fa-trophy text-brand-accent mr-2"></i> IEEE Hackathon Runners-up (Christ University)</li>
-                    <li><i class="fa-solid fa-medal text-brand-accent mr-2"></i> College Cricket & Kabaddi Captain</li>
-                    <li><i class="fa-solid fa-award text-brand-accent mr-2"></i> Multiple Inter-college Sports Wins</li>
-                    <li><i class="fa-solid fa-language text-brand-accent mr-2"></i> Multilingual: Kannada, English, Hindi, Telugu</li>
-                </ul>
+            <div class="glass-card p-6 sm:p-8 rounded-2xl">
+                <div class="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
+                    <!-- Image 1 -->
+                    <div class="break-inside-avoid rounded-xl overflow-hidden border border-white/10 hover-trigger relative group">
+                        <img src="./assets/ieee_1.jpg" alt="IEEE Hackathon 1" class="w-full object-cover gallery-img" loading="lazy">
+                    </div>
+                    <!-- Image 2 -->
+                    <div class="break-inside-avoid rounded-xl overflow-hidden border border-white/10 hover-trigger relative group">
+                        <img src="./assets/ieee_2.jpg" alt="IEEE Hackathon 2" class="w-full object-cover gallery-img" loading="lazy">
+                    </div>
+                    <!-- Image 3 -->
+                    <div class="break-inside-avoid rounded-xl overflow-hidden border border-white/10 hover-trigger relative group">
+                        <img src="./assets/adroit_1.jpg" alt="Adroit Club 1" class="w-full object-cover gallery-img" loading="lazy">
+                    </div>
+                    <!-- Image 4 -->
+                    <div class="break-inside-avoid rounded-xl overflow-hidden border border-white/10 hover-trigger relative group">
+                        <img src="./assets/adroit_2.jpg" alt="Adroit Club 2" class="w-full object-cover gallery-img" loading="lazy">
+                    </div>
+                    <!-- Image 5 -->
+                    <div class="break-inside-avoid rounded-xl overflow-hidden border border-white/10 hover-trigger relative group">
+                        <img src="./assets/adroit_3.jpg" alt="Adroit Club 3" class="w-full object-cover gallery-img" loading="lazy">
+                    </div>
+                    <!-- Image 6 -->
+                    <div class="break-inside-avoid rounded-xl overflow-hidden border border-white/10 hover-trigger relative group">
+                        <img src="./assets/agones_1.jpg" alt="Agones Kabaddi 1" class="w-full object-cover gallery-img" loading="lazy">
+                    </div>
+                    <!-- Image 7 -->
+                    <div class="break-inside-avoid rounded-xl overflow-hidden border border-white/10 hover-trigger relative group">
+                        <img src="./assets/agones_2.jpg" alt="Agones Kabaddi 2" class="w-full object-cover gallery-img" loading="lazy">
+                    </div>
+                    <!-- Image 8 -->
+                    <div class="break-inside-avoid rounded-xl overflow-hidden border border-white/10 hover-trigger relative group">
+                        <img src="./assets/aikya.jpg" alt="Aikya Club" class="w-full object-cover gallery-img" loading="lazy">
+                    </div>
+                </div>
             </div>
         </section>
 
         <!-- CONTACT SECTION -->
-        <section id="contact" class="reveal border-t border-white/10 pt-24 text-center">
-            <h2 class="text-4xl sm:text-6xl font-black text-white uppercase tracking-tighter mb-6">Initiate <br> Handshake.</h2>
-            <p class="text-gray-400 mb-12 max-w-md mx-auto">Open for backend roles, AI collabs, or talking tech & cricket.</p>
+        <section id="contact" class="reveal border-t border-white/10 pt-24 pb-12 text-center">
+            <h2 class="text-4xl sm:text-6xl font-black text-white uppercase tracking-tighter mb-6">Initiate <br> <span class="text-gradient">Handshake.</span></h2>
+            <p class="text-gray-400 mb-12 max-w-lg mx-auto leading-relaxed">System logs indicate I am open for backend roles, AI collaborations, or talking tech & cricket.</p>
 
             <div class="flex flex-wrap justify-center gap-6 font-mono text-sm">
-                <a href="mailto:mohitb23cs@rnsit.ac.in" class="px-6 py-4 glass-card hover:border-brand-light transition-all hover-trigger flex items-center gap-3">
-                    <i class="fa-solid fa-envelope text-xl text-gray-500"></i> mohitb23cs@rnsit.ac.in
+                <a href="mailto:mohitb23cs@rnsit.ac.in" class="px-8 py-5 glass-card hover:border-brand-light transition-all hover-trigger flex items-center gap-4 rounded-xl group shadow-lg hover:shadow-[0_0_20px_rgba(0,245,212,0.2)]">
+                    <div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-brand-light/20 transition-colors">
+                        <i class="fa-solid fa-envelope text-xl text-gray-400 group-hover:text-brand-light"></i>
+                    </div> 
+                    mohitb23cs@rnsit.ac.in
                 </a>
-                <a href="tel:+918861371468" class="px-6 py-4 glass-card hover:border-brand-accent transition-all hover-trigger flex items-center gap-3">
-                    <i class="fa-solid fa-phone text-xl text-gray-500"></i> +91-8861371468
+                <a href="tel:+918861371468" class="px-8 py-5 glass-card hover:border-brand-accent transition-all hover-trigger flex items-center gap-4 rounded-xl group shadow-lg hover:shadow-[0_0_20px_rgba(251,191,36,0.2)]">
+                    <div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-brand-accent/20 transition-colors">
+                        <i class="fa-solid fa-phone text-xl text-gray-400 group-hover:text-brand-accent"></i>
+                    </div>
+                    +91-8861371468
                 </a>
-                <a href="https://github.com/Mohit703-max" target="_blank" class="px-6 py-4 glass-card hover:border-white transition-all hover-trigger flex items-center gap-3 text-white">
-                    <i class="fa-brands fa-github text-xl"></i> Github Profile
+                <a href="https://www.linkedin.com/in/mohitb2705/" target="_blank" class="px-8 py-5 glass-card hover:border-blue-500 transition-all hover-trigger flex items-center gap-4 rounded-xl group shadow-lg hover:shadow-[0_0_20px_rgba(59,130,246,0.2)]">
+                    <div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-blue-500/20 transition-colors">
+                        <i class="fa-brands fa-linkedin text-xl text-gray-400 group-hover:text-blue-500"></i>
+                    </div>
+                    LinkedIn
                 </a>
             </div>
         </section>
@@ -402,7 +639,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="py-8 border-t border-white/5 text-center font-mono text-xs text-gray-600">
+    <footer class="py-8 border-t border-white/5 text-center font-mono text-xs text-gray-600 bg-black/50 backdrop-blur-md">
         <p>&copy; <span id="year"></span> Mohit B. Terminal session closed.</p>
     </footer>
 
@@ -414,58 +651,50 @@
         // Custom Cursor Logic
         const dot = document.getElementById('cursor-dot');
         const ring = document.getElementById('cursor-ring');
-        const hoverTriggers = document.querySelectorAll('.hover-trigger, a, button, .project-card, .mac-btn');
+        const hoverTriggers = document.querySelectorAll('.hover-trigger, a, button, .project-card, .mac-btn, .tech-pill');
 
-        document.addEventListener('mousemove', (e) => {
-            // Update dot instantly
-            dot.style.transform = `translate(calc(${e.clientX}px - 50%), calc(${e.clientY}px - 50%))`;
-            
-            // Smooth ring tracking
-            requestAnimationFrame(() => {
-                ring.style.transform = `translate(calc(${e.clientX}px - 50%), calc(${e.clientY}px - 50%))`;
+        // Check if device is touch capable (disable custom cursor if true)
+        const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+        
+        const pupils = document.querySelectorAll('.pupil');
+        if (!isTouchDevice) {
+            document.addEventListener('mousemove', (e) => {
+                // Custom Cursor
+                dot.style.transform = `translate(calc(${e.clientX}px - 50%), calc(${e.clientY}px - 50%))`;
+                requestAnimationFrame(() => {
+                    ring.style.transform = `translate(calc(${e.clientX}px - 50%), calc(${e.clientY}px - 50%))`;
+                });
+
+                // Robot Eyes Tracking
+                pupils.forEach(pupil => {
+                    const rect = pupil.parentElement.getBoundingClientRect();
+                    const x = (e.clientX - rect.left - rect.width / 2) / 15;
+                    const y = (e.clientY - rect.top - rect.height / 2) / 15;
+                    
+                    const moveX = Math.max(-2, Math.min(2, x));
+                    const moveY = Math.max(-2, Math.min(2, y));
+                    
+                    pupil.style.transform = `translate(${moveX}px, ${moveY}px)`;
+                });
             });
 
-            // Cyberpunk Mouse Trail Effect
-            const trail = document.createElement('div');
-            trail.className = 'pointer-events-none fixed rounded-full z-[9997]';
-            // Use amber color if hovering over elements, otherwise cyan
-            const isHovering = document.body.classList.contains('hover-active');
-            trail.style.backgroundColor = isHovering ? '#fbbf24' : '#00f5d4';
-            trail.style.boxShadow = isHovering ? '0 0 10px #fbbf24' : '0 0 10px #00f5d4';
-            trail.style.width = '4px';
-            trail.style.height = '4px';
-            trail.style.left = e.clientX + 'px';
-            trail.style.top = e.clientY + 'px';
-            trail.style.transform = 'translate(-50%, -50%)';
-            document.body.appendChild(trail);
-
-            // Fade and shrink animation
-            let opacity = 0.8;
-            let scale = 1;
-            const animateTrail = setInterval(() => {
-                opacity -= 0.04;
-                scale -= 0.02;
-                trail.style.opacity = opacity;
-                trail.style.transform = `translate(-50%, -50%) scale(${scale})`;
-                if (opacity <= 0) {
-                    clearInterval(animateTrail);
-                    trail.remove();
-                }
-            }, 16);
-        });
-
-        hoverTriggers.forEach(trigger => {
-            trigger.addEventListener('mouseenter', () => document.body.classList.add('hover-active'));
-            trigger.addEventListener('mouseleave', () => document.body.classList.remove('hover-active'));
-        });
+            hoverTriggers.forEach(trigger => {
+                trigger.addEventListener('mouseenter', () => document.body.classList.add('hover-active'));
+                trigger.addEventListener('mouseleave', () => document.body.classList.remove('hover-active'));
+            });
+        } else {
+            dot.style.display = 'none';
+            ring.style.display = 'none';
+            document.body.style.cursor = 'auto';
+        }
 
         // Typed.js Initialization
         new Typed('#typed-text', {
             strings: [
-                'Student Developer',
                 'Backend Engineer',
-                'AI Enthusiast',
-                'Problem Solver'
+                'Computer Science Student',
+                'AI/ML Enthusiast',
+                'Hackathon Competitor'
             ],
             typeSpeed: 50,
             backSpeed: 30,
@@ -474,7 +703,7 @@
             cursorChar: '█',
         });
 
-        // Intersection Observer for Scroll Animations
+        // Intersection Observer for Scroll Animations & Progress Bars
         const observerOptions = {
             root: null,
             rootMargin: '0px',
@@ -485,31 +714,70 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('active');
-                    observer.unobserve(entry.target);
+                    
+                    // Trigger progress bars if inside this section
+                    const progressBars = entry.target.querySelectorAll('.progress-bar');
+                    progressBars.forEach(bar => {
+                        bar.style.width = bar.getAttribute('data-width');
+                    });
+                    
+                    // Optional: stop observing once animated
+                    // observer.unobserve(entry.target);
                 }
             });
         }, observerOptions);
 
         document.querySelectorAll('.reveal').forEach((el) => {
-            // Hero section should show immediately
             if (el.id !== 'hero') {
                 observer.observe(el);
             }
+        });
+
+        // Mobile Menu Toggle Logic
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const navLinks = document.getElementById('nav-links');
+        const navItems = document.querySelectorAll('.nav-item');
+
+        mobileMenuToggle.addEventListener('click', () => {
+            mobileMenuToggle.classList.toggle('open');
+            if (mobileMenuToggle.classList.contains('open')) {
+                navLinks.classList.remove('opacity-0', 'pointer-events-none');
+                navLinks.classList.add('opacity-100', 'pointer-events-auto');
+                navItems.forEach(item => {
+                    item.classList.remove('translate-y-4', 'opacity-0');
+                    item.classList.add('translate-y-0', 'opacity-100');
+                });
+            } else {
+                navLinks.classList.add('opacity-0', 'pointer-events-none');
+                navLinks.classList.remove('opacity-100', 'pointer-events-auto');
+                navItems.forEach(item => {
+                    item.classList.add('translate-y-4', 'opacity-0');
+                    item.classList.remove('translate-y-0', 'opacity-100');
+                });
+            }
+        });
+
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                if (window.innerWidth < 768) {
+                    mobileMenuToggle.click();
+                }
+            });
         });
 
         // Navbar blur on scroll
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
             if (window.scrollY > 50) {
-                nav.classList.add('backdrop-blur-md', 'bg-[#0a0a0a]/80', 'border-white/10', 'shadow-2xl');
+                nav.classList.add('backdrop-blur-xl', 'bg-[#050505]/80', 'border-white/10', 'shadow-2xl');
                 nav.classList.remove('border-transparent');
             } else {
-                nav.classList.remove('backdrop-blur-md', 'bg-[#0a0a0a]/80', 'border-white/10', 'shadow-2xl');
+                nav.classList.remove('backdrop-blur-xl', 'bg-[#050505]/80', 'border-white/10', 'shadow-2xl');
                 nav.classList.add('border-transparent');
             }
         });
 
-        // tsParticles Initialization for background orbs/particles
+        // tsParticles Initialization
         tsParticles.load("tsparticles", {
             background: {
                 color: { value: "transparent" }
@@ -517,30 +785,36 @@
             fpsLimit: 60,
             interactivity: {
                 events: {
-                    onHover: { enable: true, mode: "repulse" },
+                    onHover: { enable: true, mode: "grab" },
                 },
                 modes: {
-                    repulse: { distance: 100, duration: 0.4 }
+                    grab: { distance: 150, links: { opacity: 0.3 } }
                 }
             },
             particles: {
-                color: { value: "#00f5d4" },
-                links: { enable: false },
+                color: { value: ["#00f5d4", "#fbbf24", "#a855f7"] },
+                links: { 
+                    enable: true, 
+                    color: "#ffffff", 
+                    distance: 150, 
+                    opacity: 0.05, 
+                    width: 1 
+                },
                 move: {
                     enable: true,
-                    speed: 0.5,
+                    speed: 0.6,
                     direction: "none",
                     random: true,
                     straight: false,
                     outModes: "out"
                 },
                 number: {
-                    density: { enable: true, area: 800 },
+                    density: { enable: true, area: 1000 },
                     value: 40
                 },
                 opacity: {
-                    value: { min: 0.1, max: 0.5 },
-                    animation: { enable: true, speed: 1, minimumValue: 0.1 }
+                    value: { min: 0.1, max: 0.3 },
+                    animation: { enable: true, speed: 0.5, minimumValue: 0.1 }
                 },
                 size: {
                     value: { min: 1, max: 3 }
@@ -548,6 +822,103 @@
             },
             detectRetina: true
         });
+
+        // Scroll Progress Logic
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('scroll-progress').style.width = scrolled + '%';
+        });
+
+        // Live System Logs Logic
+        const logs = [
+            "Initializing core systems...",
+            "Loading Mohit_B_Profile.json... [OK]",
+            "Establishing connection to backend... [200 OK]",
+            "Fetching GitHub repositories...",
+            "Optimizing database queries...",
+            "Training ML models on local dataset...",
+            "System status: OPTIMAL",
+            "Awaiting user interaction..."
+        ];
+        let logIndex = 0;
+        const logContainer = document.getElementById('system-logs');
+        if(logContainer) {
+            const logInterval = setInterval(() => {
+                if(logIndex < logs.length) {
+                    const logLine = document.createElement('div');
+                    logLine.className = 'mb-2 opacity-0 transform translate-y-2 transition-all duration-300';
+                    logLine.innerHTML = `<span class="text-brand-light mr-2">>></span> ${logs[logIndex]}`;
+                    logContainer.appendChild(logLine);
+                    
+                    // Trigger reflow
+                    void logLine.offsetWidth;
+                    logLine.classList.remove('opacity-0', 'translate-y-2');
+                    
+                    logContainer.scrollTop = logContainer.scrollHeight;
+                    logIndex++;
+                } else {
+                    clearInterval(logInterval);
+                    const cursor = document.createElement('div');
+                    cursor.className = 'animate-pulse text-brand-light mt-2';
+                    cursor.innerHTML = '<span class="text-brand-light mr-2">>></span>_';
+                    logContainer.appendChild(cursor);
+                }
+            }, 1000);
+        }
+
+        // Canvas Cursor Trail Logic
+        const canvas = document.getElementById('cursor-canvas');
+        if (canvas && !isTouchDevice) {
+            const ctx = canvas.getContext('2d');
+            let width = canvas.width = window.innerWidth;
+            let height = canvas.height = window.innerHeight;
+            let trail = [];
+            
+            window.addEventListener('resize', () => {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                trail.push({ x: e.clientX, y: e.clientY, age: 0 });
+            });
+
+            function animateTrail() {
+                ctx.clearRect(0, 0, width, height);
+                
+                // Update ages for all points
+                for (let i = 0; i < trail.length; i++) {
+                    trail[i].age++;
+                }
+                
+                // Filter dead points (reduce length of the line)
+                trail = trail.filter(p => p.age < 10);
+                
+                if (trail.length > 1) {
+                    ctx.beginPath();
+                    ctx.moveTo(trail[0].x, trail[0].y);
+                    for (let i = 1; i < trail.length; i++) {
+                        const xc = (trail[i].x + trail[i - 1].x) / 2;
+                        const yc = (trail[i].y + trail[i - 1].y) / 2;
+                        ctx.quadraticCurveTo(trail[i - 1].x, trail[i - 1].y, xc, yc);
+                    }
+                    ctx.lineTo(trail[trail.length - 1].x, trail[trail.length - 1].y);
+                    
+                    ctx.lineCap = 'round';
+                    ctx.lineJoin = 'round';
+                    ctx.strokeStyle = 'rgba(0, 245, 212, 0.4)';
+                    ctx.lineWidth = 2;
+                    ctx.shadowBlur = 10;
+                    ctx.shadowColor = '#00f5d4';
+                    ctx.stroke();
+                }
+                
+                requestAnimationFrame(animateTrail);
+            }
+            animateTrail();
+        }
     </script>
 </body>
 </html>
